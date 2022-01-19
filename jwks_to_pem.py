@@ -33,7 +33,8 @@ def base64_to_long(data):
 
 
 print("Fetching JWKS from {}".format(args.org))
-r = requests.get("https://{}/oauth2/v1/keys".format(args.org))
+# make this work w/Okta default custom AuthZ server (hardcode "default" in path below)
+r = requests.get("https://{}/oauth2/default/v1/keys".format(args.org))
 jwks = r.json()
 
 for jwk in jwks['keys']:
@@ -46,5 +47,5 @@ for jwk in jwks['keys']:
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
 
-    print "PEM for KID '{}'".format(jwk['kid'])
-    print pem
+    print ("PEM for KID "+'{}'.format(jwk['kid']))
+    print (pem)
